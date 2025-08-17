@@ -35,7 +35,7 @@
         }
         .discord-widget-container {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             width: 100%;
             margin-top: 2rem;
@@ -130,11 +130,19 @@
         .copy-button:active {
             background-color: #7e22ce;
         }
-        .realms-card {
+        .console-card {
             background-color: #1a1a2e;
             padding: 1.5rem;
             border-radius: 1rem;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .app-link {
+            transition: transform 0.2s;
+        }
+        .app-link:hover {
+            transform: translateY(-2px);
         }
     </style>
 </head>
@@ -215,24 +223,32 @@
                     <span>Copiar IP e Porta</span>
                 </button>
             </div>
-
-            <!-- Card para o Realms -->
-            <div class="realms-card">
-                <div class="card-header">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-blue-500" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2a10 10 0 0 0-9.67 7.35C2.69 9.8 2 10.84 2 12c0 2.21 1.79 4 4 4h14c1.65 0 3-1.35 3-3s-1.35-3-3-3h-2.18l-.72-1.92A4.98 4.98 0 0 0 12 2zM6 14a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm14 0c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zM9 10a1 1 0 1 1-1-1 1 1 0 0 1 1 1zm6 0a1 1 0 1 1-1-1 1 1 0 0 1 1 1z"/>
-                    </svg>
-                    <h3 class="text-blue-500">Realms</h3>
+        </div>
+        
+        <!-- Card para a Conexão do Console -->
+        <div class="console-card">
+            <div class="flex justify-center items-center mb-4">
+                <h3 class="text-2xl font-bold text-center">🕹️ Console 🎮</h3>
+            </div>
+            <p class="text-white text-lg mb-4">
+                Se você joga no console, pode se conectar à nossa comunidade baixando BedrockTogether.
+            </p>
+            <div class="flex flex-col items-center gap-4">
+                <img
+                    src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/fc/d7/a0/fcd7a066-3ac0-8b89-fa8e-714290c2faff/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/230x0w.webp"
+                    alt="Logo BedrockTogether"
+                    class="w-24 h-24 rounded-2xl shadow-lg"
+                >
+                <div class="flex flex-col md:flex-row gap-4">
+                    <a href="https://apps.apple.com/us/app/bedrocktogether/id1534593376" target="_blank" class="app-link flex items-center gap-2 p-2 bg-gray-800 rounded-lg shadow hover:bg-gray-700">
+                        <span class="text-lg">📱</span>
+                        <span>iPhone</span>
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=pl.extollite.bedrocktogetherapp" target="_blank" class="app-link flex items-center gap-2 p-2 bg-gray-800 rounded-lg shadow hover:bg-gray-700">
+                        <span class="text-lg">🤖</span>
+                        <span>Android</span>
+                    </a>
                 </div>
-                <p>Link direto: <a href="https://realms.gg/DCCUyqAYHRE" target="_blank" class="text-purple-400 hover:underline">realms.gg/DCCUyqAYHRE</a></p>
-                <p>Código de convite: <span id="realms-code" class="font-mono text-lg text-gray-200">DCCUyqAYHRE</span></p>
-                <button onclick="copyToClipboard('DCCUyqAYHRE')" class="copy-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
-                        <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
-                    </svg>
-                    <span>Copiar Código</span>
-                </button>
             </div>
         </div>
 
@@ -276,8 +292,27 @@
             document.execCommand('copy');
             document.body.removeChild(tempInput);
             
-            // Feedback visual
-            alert('Copiado para a área de transferência: ' + text);
+            // Usando um modal simples em vez de alert()
+            const messageBox = document.createElement('div');
+            messageBox.style.position = 'fixed';
+            messageBox.style.top = '50%';
+            messageBox.style.left = '50%';
+            messageBox.style.transform = 'translate(-50%, -50%)';
+            messageBox.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+            messageBox.style.color = '#fff';
+            messageBox.style.padding = '1.5rem 2rem';
+            messageBox.style.borderRadius = '10px';
+            messageBox.style.zIndex = '1000';
+            messageBox.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.5)';
+            messageBox.style.fontSize = '1.1rem';
+            messageBox.innerText = 'Copiado para a área de transferência: ' + text;
+            
+            document.body.appendChild(messageBox);
+            
+            // Remove o modal após 1.5 segundos
+            setTimeout(() => {
+                document.body.removeChild(messageBox);
+            }, 1500);
         }
     </script>
 </body>
