@@ -16,23 +16,32 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            padding: 2rem;
+            padding: 1rem; /* Padding reduzido para ecrãs mais pequenos */
             position: relative;
-            /* Usando um gradiente linear para simular o efeito do portal do Minecraft */
-            background: linear-gradient(135deg, #36177a, #4e229d, #36177a);
+            /* Novo gradiente escuro e suave para o fundo */
+            background: linear-gradient(135deg, #1f2937, #111827);
         }
         .container {
-            /* Cor de fundo alterada para se assemelhar à lava do Minecraft */
-            background-color: rgba(139, 45, 21, 0.9);
+            /* Cor de fundo alterada para um cinzento escuro que não incomoda os olhos */
+            background-color: rgba(31, 41, 55, 0.9);
             border-radius: 1.5rem;
-            padding: 2.5rem;
+            padding: 2rem;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-            max-width: 900px;
-            width: 100%;
+            width: 100%; /* Aproveita mais o espaço horizontal */
+            max-width: 100%; /* Remove a largura máxima fixa para telemóveis */
             text-align: center;
             backdrop-filter: blur(5px);
-            position: relative; /* Adicionado para posicionamento da logo e da bandeira dentro do container */
+            position: relative;
         }
+
+        /* Ajustes para ecrãs maiores */
+        @media (min-width: 768px) {
+            .container {
+                max-width: 900px; /* Mantém a largura máxima em ecrãs de desktop para melhor leitura */
+                padding: 2.5rem;
+            }
+        }
+
         .discord-widget-container {
             display: flex;
             flex-direction: column;
@@ -43,6 +52,7 @@
         iframe {
             border: none;
             width: 100%;
+            max-width: 350px; /* Limita a largura do widget no desktop */
             height: 500px;
             border-radius: 1rem;
         }
@@ -180,10 +190,20 @@
             <span class="text-xs font-bold text-gray-200">Ping BR</span>
         </div>
 
-        <!-- Seção de Cabeçalho (Hero) -->
-        <div class="hero mb-8">
+        <!-- Seção de Cabeçalho (Hero) - Alterada para uma apresentação mais detalhada -->
+        <div class="hero mb-8 text-center">
             <h1 class="text-4xl md:text-5xl font-extrabold mb-2">Bem-vindo ao KillvCraft!</h1>
-            <p class="text-lg md:text-xl text-gray-400">Junte-se a nós para a melhor experiência em Minecraft!</p>
+            <p class="text-lg md:text-xl text-gray-400 mb-4">
+                Somos uma comunidade justa, onde as regras valem para todos.
+                Não vendemos vantagens em PVP, apenas recursos para que possa avançar mais rápido em sua jornada.
+                O nosso servidor é atualmente focado no modo de sobrevivência.
+            </p>
+            <p class="text-sm md:text-base text-gray-400 mb-8">
+                Role para baixo para encontrar as informações de conexão, a nossa comunidade no Discord e a nossa loja. Venha fazer parte desta aventura!
+            </p>
+            <span class="inline-block px-4 py-2 text-sm md:text-base font-bold text-yellow-400 border border-yellow-400 rounded-full">
+                Estamos em Beta!
+            </span>
         </div>
 
         <!-- Seção de Informações do Servidor Minecraft -->
@@ -229,37 +249,45 @@
             </div>
         </div>
         
-        <!-- Card para a Conexão do Console -->
-        <div class="console-card">
+        <!-- Card para a Conexão do Console (Realms) -->
+        <div class="console-card server-card">
             <div class="flex justify-center items-center mb-4">
                 <h3 class="text-2xl font-bold text-center">🕹️ Console 🎮</h3>
             </div>
+            
             <p class="text-white text-lg mb-4">
-                Se você joga no console, pode se conectar à nossa comunidade baixando BedrockTogether.
+                A nossa comunidade agora tem um Realm! Conecte-se usando as informações abaixo:
             </p>
-            <p class="text-gray-400 text-sm mb-4">
-                Clique no ícone correspondente ao seu sistema operacional para baixar o aplicativo:
+            
+            <!-- Novo texto adicionado para explicar o Realm -->
+            <p class="text-sm text-gray-400 italic opacity-75 mb-4">
+                O Realms é uma porta de entrada para o servidor acima. Ao entrar, será transferido.
             </p>
-            <div class="flex flex-col items-center gap-4">
-                <img
-                    src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/fc/d7/a0/fcd7a066-3ac0-8b89-fa8e-714290c2faff/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/230x0w.webp"
-                    alt="Logo BedrockTogether"
-                    class="w-24 h-24 rounded-2xl shadow-lg"
-                >
-                <div class="flex flex-col md:flex-row gap-4">
-                    <a href="https://apps.apple.com/us/app/bedrocktogether/id1534593376" target="_blank" class="app-link flex items-center gap-2 p-2 bg-gray-800 rounded-lg shadow hover:bg-gray-700">
-                        <span class="text-lg">📱</span>
-                        <span>iPhone</span>
+
+            <div class="flex flex-col items-center gap-4 text-left">
+                <p class="text-gray-200">
+                    <span class="font-bold text-white">Link:</span> 
+                    <a href="https://realms.gg/DCCUyqAYHRE" target="_blank" class="text-cyan-400 hover:underline">
+                        https://realms.gg/DCCUyqAYHRE
                     </a>
-                    <a href="https://play.google.com/store/apps/details?id=pl.extollite.bedrocktogetherapp" target="_blank" class="app-link flex items-center gap-2 p-2 bg-gray-800 rounded-lg shadow hover:bg-gray-700">
-                        <span class="text-lg">🤖</span>
-                        <span>Android</span>
-                    </a>
-                </div>
+                </p>
+                <p class="text-gray-200">
+                    <span class="font-bold text-white">Código de convite:</span> 
+                    <span class="text-cyan-400 font-bold">DCCUyqAYHRE</span>
+                </p>
+                <!-- Botão de copiar adicionado aqui -->
+                <button onclick="copyToClipboard('DCCUyqAYHRE')" class="copy-button mt-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                        <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                    </svg>
+                    <span>Copiar Código</span>
+                </button>
             </div>
-            <!-- Aviso de manutenção adicionado aqui -->
+            
+            <!-- Aviso do Realms atualizado -->
             <p class="mt-6 text-sm md:text-base text-yellow-400 font-bold">
-                Aviso: Realms encontra-se em manutenção sem previsão de volta.
+                Aviso: Este Realm é destinado apenas para jogadores de console.
             </p>
         </div>
 
@@ -313,30 +341,65 @@
             tempInput.value = text;
             document.body.appendChild(tempInput);
             tempInput.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempInput);
-            
-            // Usando um modal simples em vez de alert()
-            const messageBox = document.createElement('div');
-            messageBox.style.position = 'fixed';
-            messageBox.style.top = '50%';
-            messageBox.style.left = '50%';
-            messageBox.style.transform = 'translate(-50%, -50%)';
-            messageBox.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-            messageBox.style.color = '#fff';
-            messageBox.style.padding = '1.5rem 2rem';
-            messageBox.style.borderRadius = '10px';
-            messageBox.style.zIndex = '1000';
-            messageBox.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.5)';
-            messageBox.style.fontSize = '1.1rem';
-            messageBox.innerText = 'Copiado para a área de transferência: ' + text;
-            
-            document.body.appendChild(messageBox);
-            
-            // Remove o modal após 1.5 segundos
-            setTimeout(() => {
-                document.body.removeChild(messageBox);
-            }, 1500);
+
+            try {
+                // Tenta executar o comando de cópia
+                document.execCommand('copy');
+                
+                // Exibe a mensagem de sucesso
+                const messageBox = document.createElement('div');
+                messageBox.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background-color: rgba(0, 0, 0, 0.8);
+                    color: #fff;
+                    padding: 1.5rem 2rem;
+                    border-radius: 10px;
+                    z-index: 1000;
+                    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+                    font-size: 1.1rem;
+                `;
+                messageBox.innerText = 'Copiado para a área de transferência: ' + text;
+                
+                document.body.appendChild(messageBox);
+                
+                // Remove o modal após 2 segundos
+                setTimeout(() => {
+                    document.body.removeChild(messageBox);
+                }, 2000);
+
+            } catch (err) {
+                console.error('Falha ao tentar copiar o texto: ', err);
+                
+                // Exibe a mensagem de falha
+                const messageBox = document.createElement('div');
+                messageBox.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background-color: rgba(0, 0, 0, 0.8);
+                    color: #fff;
+                    padding: 1.5rem 2rem;
+                    border-radius: 10px;
+                    z-index: 1000;
+                    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+                    font-size: 1.1rem;
+                `;
+                messageBox.innerText = 'Falha ao copiar. Por favor, copie manualmente: ' + text;
+                
+                document.body.appendChild(messageBox);
+
+                // Remove o modal após 2 segundos
+                setTimeout(() => {
+                    document.body.removeChild(messageBox);
+                }, 2000);
+            } finally {
+                // Sempre remove o elemento temporário
+                document.body.removeChild(tempInput);
+            }
         }
     </script>
 </body>
