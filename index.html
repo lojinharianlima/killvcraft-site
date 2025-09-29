@@ -1,430 +1,685 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KillvCraft - Servidor Discord</title>
-    <!-- Incluindo a biblioteca Tailwind CSS para um design moderno e responsivo -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>KillvCraft - Servidor de Minecraft</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-            color: #e4e4e7;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+        * {
             margin: 0;
-            padding: 1rem; /* Padding reduzido para ecrãs mais pequenos */
-            position: relative;
-            /* Novo gradiente escuro e suave para o fundo */
-            background: linear-gradient(135deg, #1f2937, #111827);
+            padding: 0;
+            box-sizing: border-box;
         }
-        .container {
-            /* Cor de fundo alterada para um cinzento escuro que não incomoda os olhos */
-            background-color: rgba(31, 41, 55, 0.9);
-            border-radius: 1.5rem;
-            padding: 2rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-            width: 100%; /* Aproveita mais o espaço horizontal */
-            max-width: 100%; /* Remove a largura máxima fixa para telemóveis */
-            text-align: center;
-            backdrop-filter: blur(5px);
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 2px solid #ff8c00;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
             position: relative;
         }
 
-        /* Ajustes para ecrãs maiores */
-        @media (min-width: 768px) {
-            .container {
-                max-width: 900px; /* Mantém a largura máxima em ecrãs de desktop para melhor leitura */
-                padding: 2.5rem;
+        .nav-links a:hover {
+            color: #ffd700;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #ffd700, #ff8c00);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .btn-play {
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            color: #000;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 0 20px rgba(255, 140, 0, 0.5);
+        }
+
+        .btn-play:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 30px rgba(255, 215, 0, 0.7);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23111" width="1200" height="600"/><g fill="%23ff8c00" opacity="0.1"><circle cx="100" cy="100" r="50"/><circle cx="300" cy="300" r="80"/><circle cx="600" cy="200" r="60"/><circle cx="900" cy="400" r="70"/><circle cx="1100" cy="150" r="40"/></g></svg>');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            margin-top: 70px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 215, 0, 0.1), transparent 70%);
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: #ddd;
+        }
+
+        .server-info {
+            display: flex;
+            gap: 3rem;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+
+        .info-card {
+            background: rgba(255, 140, 0, 0.1);
+            padding: 1.5rem 2.5rem;
+            border-radius: 15px;
+            border: 2px solid #ff8c00;
+            backdrop-filter: blur(10px);
+        }
+
+        .info-card h3 {
+            color: #ffd700;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-card p {
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #ddd;
+        }
+
+        .about-text h3 {
+            color: #ffd700;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+
+        .about-image {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 140, 0, 0.2));
+            border-radius: 20px;
+            padding: 3rem;
+            border: 2px solid #ff8c00;
+            text-align: center;
+            font-size: 5rem;
+            color: #ffd700;
+        }
+
+        /* Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.05), rgba(255, 140, 0, 0.05));
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 2px solid #ff8c00;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 40px rgba(255, 140, 0, 0.3);
+            border-color: #ffd700;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: #ffd700;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            color: #ffd700;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .feature-card p {
+            color: #ddd;
+            line-height: 1.6;
+        }
+
+        /* Stats */
+        .stats {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 140, 0, 0.1));
+            border-radius: 20px;
+            padding: 4rem;
+            margin: 3rem 0;
+            border: 2px solid #ff8c00;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            text-align: center;
+        }
+
+        .stat-item h2 {
+            font-size: 3.5rem;
+            color: #ffd700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            color: #fff;
+            font-size: 1.2rem;
+        }
+
+        /* Team */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .team-card {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.05), rgba(255, 140, 0, 0.05));
+            padding: 2rem;
+            border-radius: 20px;
+            border: 2px solid #ff8c00;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 40px rgba(255, 140, 0, 0.3);
+        }
+
+        .team-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 3rem;
+            border: 3px solid #ff8c00;
+        }
+
+        .team-card h3 {
+            color: #ffd700;
+            margin-bottom: 0.5rem;
+        }
+
+        .team-card p {
+            color: #ddd;
+        }
+
+        /* Footer */
+        footer {
+            background: #000;
+            padding: 3rem 5%;
+            border-top: 2px solid #ff8c00;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-section h3 {
+            color: #ffd700;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #ddd;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.8rem;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #ffd700;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #333;
+            color: #888;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
-        .discord-widget-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            margin-top: 2rem;
-        }
-        iframe {
-            border: none;
-            width: 100%;
-            max-width: 350px; /* Limita a largura do widget no desktop */
-            height: 500px;
-            border-radius: 1rem;
-        }
-        .hero h1 {
-            font-size: 3rem;
-            font-weight: bold;
-            color: #FFD700; /* Cor amarela do texto */
-            text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000; /* Contorno preto */
-            margin-bottom: 0.5rem;
-        }
-        .hero p {
-            font-size: 1.25rem;
-            color: #a0a0b0;
-            margin-bottom: 2rem;
-        }
-        /* Classe para o novo estilo de botões */
-        .action-button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 0.75rem 2rem;
-            border-radius: 9999px;
-            font-weight: bold;
-            color: #fff;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .action-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-        }
-        .logo {
-            position: absolute;
-            top: 2rem;
-            left: 2rem;
-            width: 80px;
-            height: auto;
-            border-radius: 50%;
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
-            transition: transform 0.3s ease-in-out;
-        }
-        .logo:hover {
-            transform: rotate(10deg) scale(1.1);
-        }
-        .minecraft-info {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        .server-card {
-            background-color: #1a1a2e;
-            padding: 1.5rem;
-            border-radius: 1rem;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: transform 0.2s;
-        }
-        .server-card:hover {
-            transform: translateY(-5px);
-        }
-        .card-header {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 0.75rem;
-        }
-        .card-header h3 {
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
             font-size: 1.5rem;
-            font-weight: bold;
+            color: #ffd700;
+            cursor: pointer;
         }
-        .copy-button {
-            background-color: #9333ea;
-            color: #fff;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-top: 1rem;
-            transition: background-color 0.2s;
-        }
-        .copy-button:hover {
-            background-color: #a855f7;
-        }
-        .copy-button:active {
-            background-color: #7e22ce;
-        }
-        .console-card {
-            background-color: #1a1a2e;
-            padding: 2rem;
-            border-radius: 1rem;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            margin-top: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        .app-link {
-            transition: transform 0.2s;
-        }
-        .app-link:hover {
-            transform: translateY(-2px);
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .server-info {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
-<body class="bg-gray-900 text-gray-100">
-
-    <!-- Seção da Logo (Canto Superior Esquerdo) -->
-    <header class="absolute top-8 left-8">
-        <!-- O link direto para a sua logo foi atualizado aqui. -->
-        <img
-            src="https://i.imgur.com/eBf2s3k.png"
-            alt="Logo KillvCraft"
-            class="logo"
-        >
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">KillvCraft</div>
+            <ul class="nav-links">
+                <li><a href="#home">Início</a></li>
+                <li><a href="#about">Sobre</a></li>
+                <li><a href="#features">Recursos</a></li>
+                <li><a href="#team">Equipe</a></li>
+                <li><a href="#contact">Contato</a></li>
+            </ul>
+            <a href="#" class="btn-play">JOGAR AGORA</a>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
     </header>
 
-    <div class="container mx-auto p-8 md:p-12">
-        <!-- Nova logo adicionada no canto superior esquerdo do container principal -->
-        <img
-            src="https://i.imgur.com/edXjycI.png"
-            alt="Logo KillvCraft"
-            class="absolute top-4 left-4 w-16 h-auto"
-        >
-
-        <!-- Bandeira do Brasil e texto "Ping BR" adicionados no canto superior direito -->
-        <div class="absolute top-4 right-4 flex flex-col items-center">
-            <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Flag_of_Brazil.svg/1920px-Flag_of_Brazil.svg.png"
-                alt="Bandeira do Brasil"
-                class="w-8 h-auto mb-1"
-            >
-            <span class="text-xs font-bold text-gray-200">Ping BR</span>
-        </div>
-
-        <!-- Seção de Cabeçalho (Hero) - Design mais compacto e visualmente atraente -->
-        <div class="hero mb-8 text-center">
-            <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Bem-vindo ao KillvCraft!</h1>
-            <p class="text-lg md:text-xl text-gray-400 mb-6">
-                Descubra a nossa comunidade onde a aventura e a justiça andam de mãos dadas!
-            </p>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>KillvCraft</h1>
+            <p>O melhor servidor de Minecraft do Brasil</p>
+            <a href="#" class="btn-play">CONECTAR AGORA</a>
             
-            <!-- Reduzindo o espaçamento entre os elementos para um layout mais compacto -->
-            <div class="flex flex-col md:flex-row justify-center items-center gap-1 mb-8">
-                <div class="flex flex-col items-center">
-                    <span class="text-4xl">⚖️</span>
-                    <!-- Margem e tamanho de fonte reduzidos, texto em negrito para maior visibilidade -->
-                    <p class="mt-1 text-sm font-bold text-gray-300">Comunidade Justa</p>
-                    <p class="text-xs text-gray-500 italic">As regras valem para todos.</p>
+            <div class="server-info">
+                <div class="info-card">
+                    <h3>250+</h3>
+                    <p>Jogadores Online</p>
                 </div>
-                <div class="flex flex-col items-center">
-                    <span class="text-4xl">🛡️</span>
-                    <!-- Margem e tamanho de fonte reduzidos, texto em negrito para maior visibilidade -->
-                    <p class="mt-1 text-sm font-bold text-gray-300">Sem Vantagem PVP</p>
-                    <p class="text-xs text-gray-500 italic">Itens da loja focados no progresso, não no poder.</p>
+                <div class="info-card">
+                    <h3>24/7</h3>
+                    <p>Online</p>
                 </div>
-                <div class="flex flex-col items-center">
-                    <span class="text-4xl">🌲</span>
-                    <!-- Margem e tamanho de fonte reduzidos, texto em negrito para maior visibilidade -->
-                    <p class="mt-1 text-sm font-bold text-gray-300">Foco em Survival</p>
-                    <p class="text-xs text-gray-500 italic">Construa, explore e sobreviva conosco!</p>
+                <div class="info-card">
+                    <h3>50+</h3>
+                    <p>Recursos Únicos</p>
                 </div>
-            </div>
-            
-            <p class="text-sm md:text-base text-gray-400 mb-4">
-                Role para baixo e junte-se à nossa jornada!
-            </p>
-            <!-- A classe mx-auto foi adicionada aqui para garantir o alinhamento central -->
-            <span class="inline-block px-4 py-2 text-sm md:text-base font-bold text-yellow-400 border border-yellow-400 rounded-full mx-auto">
-                Estamos em Beta!
-            </span>
-        </div>
-
-        <!-- Seção de Informações do Servidor Minecraft -->
-        <div class="minecraft-info mb-8">
-            <!-- Texto corrigido para "Informações de Conexão: Minecraft Java (Original e Pirata), Bedrock e Consoles." -->
-            <h2 class="text-2xl font-bold mb-4">Informações de Conexão: Minecraft Java (Original e Pirata), Bedrock e Consoles.</h2>
-            
-            <!-- Card para a Edição Java -->
-            <div class="server-card">
-                <div class="card-header">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-orange-500" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h2v-6h-2v6zm0-8h2V7h-2v2z"/>
-                    </svg>
-                    <h3 class="text-orange-500">Java Edition</h3>
-                </div>
-                <p>IP: <span id="java-ip" class="font-mono text-lg text-cyan-400 font-bold">killvcraft.net</span></p>
-                <p>Porta: <span id="java-port" class="font-mono text-lg text-cyan-400 font-bold">25565</span></p>
-                <button onclick="copyToClipboard('killvcraft.net')" class="copy-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
-                        <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
-                    </svg>
-                    <span>Copiar IP</span>
-                </button>
-            </div>
-
-            <!-- Card para a Edição Bedrock -->
-            <div class="server-card">
-                <div class="card-header">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-green-500" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M21 12l-9-9-9 9h6v9h6v-9h6z"/>
-                    </svg>
-                    <h3 class="text-green-500">Bedrock Edition</h3>
-                </div>
-                <p>IP: <span id="bedrock-ip" class="font-mono text-lg text-cyan-400 font-bold">kvc.killvcraft.net</span></p>
-                <p>Porta: <span id="bedrock-port" class="font-mono text-lg text-cyan-400 font-bold">19132</span></p>
-                <button onclick="copyToClipboard('kvc.killvcraft.net:19132')" class="copy-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
-                        <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
-                    </svg>
-                    <span>Copiar IP e Porta</span>
-                </button>
             </div>
         </div>
-        
-        <!-- Card para a Conexão do Console (Realms) -->
-        <div class="console-card server-card">
-            <div class="flex justify-center items-center mb-4">
-                <h3 class="text-2xl font-bold text-center">🕹️ Console 🎮</h3>
-            </div>
-            
-            <p class="text-white text-lg mb-4">
-                A nossa comunidade agora tem um Realm! Conecte-se usando as informações abaixo:
-            </p>
-            
-            <!-- Novo texto adicionado para explicar o Realm -->
-            <p class="text-sm text-gray-400 italic opacity-75 mb-4">
-                O Realms é uma porta de entrada para o servidor acima. Ao entrar, será transferido.
-            </p>
+    </section>
 
-            <div class="flex flex-col items-center gap-4 text-left">
-                <p class="text-gray-200">
-                    <span class="font-bold text-white">Link:</span> 
-                    <a href="https://realms.gg/DCCUyqAYHRE" target="_blank" class="text-cyan-400 hover:underline">
-                        https://realms.gg/DCCUyqAYHRE
-                    </a>
+    <!-- About Section -->
+    <section id="about">
+        <h2 class="section-title">Sobre o Servidor</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <h3>Bem-vindo ao KillvCraft</h3>
+                <p>
+                    O KillvCraft é um servidor de MTA SA (Multi Theft Auto: San Andreas) que oferece 
+                    uma experiência única e emocionante para todos os jogadores. Com sistemas exclusivos, 
+                    uma comunidade ativa e eventos constantes, somos a melhor escolha para quem busca 
+                    diversão e adrenalina no mundo de San Andreas.
                 </p>
-                <p class="text-gray-200">
-                    <span class="font-bold text-white">Código de convite:</span> 
-                    <span class="text-cyan-400 font-bold">DCCUyqAYHRE</span>
+                <br>
+                <p>
+                    Nosso servidor conta com modos de jogo variados, incluindo roleplay, freeroam, 
+                    corridas, DM e muito mais. Venha fazer parte da nossa comunidade e descubra tudo 
+                    que o KillvCraft tem a oferecer!
                 </p>
-                <!-- Botão de copiar adicionado aqui -->
-                <button onclick="copyToClipboard('DCCUyqAYHRE')" class="copy-button mt-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
-                        <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
-                    </svg>
-                    <span>Copiar Código</span>
-                </button>
             </div>
-            
-            <!-- Aviso do Realms atualizado -->
-            <p class="mt-6 text-sm md:text-base text-yellow-400 font-bold">
-                Aviso: Este Realm é destinado apenas para jogadores de console.
-            </p>
+            <div class="about-image">
+                <i class="fas fa-gamepad"></i>
+            </div>
         </div>
+    </section>
 
-        <!-- Container para o Widget do Discord -->
-        <div class="discord-widget-container">
-            <h2 class="text-2xl font-bold mb-4">Comunidade Discord</h2>
-            <!-- Este é o código do widget fornecido diretamente pelo Discord. -->
-            <iframe
-                src="https://discord.com/widget?id=1206503068393275402&theme=dark"
-                width="350"
-                height="500"
-                allowtransparency="true"
-                frameborder="0"
-                sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
-            </iframe>
+    <!-- Features Section -->
+    <section id="features">
+        <h2 class="section-title">Nossos Recursos</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                <h3>Anti-Cheat</h3>
+                <p>Sistema avançado de proteção contra cheaters para garantir uma experiência justa.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-car"></i></div>
+                <h3>Carros Customizados</h3>
+                <p>Centenas de veículos exclusivos e personalizáveis para você colecionar.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-trophy"></i></div>
+                <h3>Eventos Diários</h3>
+                <p>Participe de eventos exclusivos todos os dias e ganhe recompensas incríveis.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-users"></i></div>
+                <h3>Comunidade Ativa</h3>
+                <p>Faça parte de uma comunidade engajada com milhares de jogadores ativos.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-map-marked-alt"></i></div>
+                <h3>Mapas Exclusivos</h3>
+                <p>Explore mapas customizados criados especialmente para o servidor.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-headset"></i></div>
+                <h3>Suporte 24/7</h3>
+                <p>Nossa equipe está sempre disponível para ajudar você quando precisar.</p>
+            </div>
         </div>
-    
-        <!-- Botões de Ação para o Discord e Loja -->
-        <div class="mt-8 flex flex-col md:flex-row gap-4 items-center justify-center">
-            <!-- Botão para entrar no Discord -->
-            <a href="https://discord.gg/TVsGGvaTdY" target="_blank" class="action-button bg-blue-500 hover:bg-blue-600">
-                <span>Entrar no Discord</span>
-            </a>
-            
-            <!-- Botão para a Loja com ícone de carrinho -->
-            <a href="https://discord.gg/TVsGGvaTdY" target="_blank" class="action-button bg-green-500 hover:bg-green-600">
-                <!-- Ícone de carrinho de compras -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2zm-8.99-3h11.97c.56 0 1.05-.33 1.25-.83L22 6H8.25c-.49-1.11-1.63-2-2.91-2H4c-.55 0-1 .45-1 1s.45 1 1 1h1.34L7 15h9.71L19 7H8.62L6.34 1.83C6.18 1.48 5.82 1.25 5.41 1.25H2c-.55 0-1 .45-1 1s.45 1 1 1h2.41c.42 0 .76.28.91.68L7 15.01z"/>
-                </svg>
-                <span>Loja</span>
-            </a>
-        </div>
+    </section>
 
-        <div class="mt-2 text-sm text-gray-500 text-center">
-            <p>
-                (Clique nos botões acima para entrar no servidor e explorar a nossa Loja!)
-            </p>
+    <!-- Stats Section -->
+    <section>
+        <div class="stats">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h2>5000+</h2>
+                    <p>Jogadores Registrados</p>
+                </div>
+                <div class="stat-item">
+                    <h2>250+</h2>
+                    <p>Players Online</p>
+                </div>
+                <div class="stat-item">
+                    <h2>99.9%</h2>
+                    <p>Uptime</p>
+                </div>
+                <div class="stat-item">
+                    <h2>3+</h2>
+                    <p>Anos Online</p>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <!-- Aviso de direitos autorais adicionado no rodapé do container -->
-        <div class="mt-8 text-center text-gray-400 text-xs">
-            &copy; Copyrighted by KillvCraft
+    <!-- Team Section -->
+    <section id="team">
+        <h2 class="section-title">Nossa Equipe</h2>
+        <div class="team-grid">
+            <div class="team-card">
+                <div class="team-avatar"><i class="fas fa-crown"></i></div>
+                <h3>KillvMaster</h3>
+                <p>Fundador & Desenvolvedor</p>
+            </div>
+            <div class="team-card">
+                <div class="team-avatar"><i class="fas fa-user-shield"></i></div>
+                <h3>AdminPro</h3>
+                <p>Administrador</p>
+            </div>
+            <div class="team-card">
+                <div class="team-avatar"><i class="fas fa-code"></i></div>
+                <h3>DevMaster</h3>
+                <p>Desenvolvedor</p>
+            </div>
+            <div class="team-card">
+                <div class="team-avatar"><i class="fas fa-hands-helping"></i></div>
+                <h3>SupportKing</h3>
+                <p>Suporte</p>
+            </div>
         </div>
-    </div>
-    
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>KillvCraft</h3>
+                <p>O melhor servidor de MTA SA do Brasil. Junte-se a nós e faça parte desta incrível comunidade!</p>
+            </div>
+            <div class="footer-section">
+                <h3>Links Rápidos</h3>
+                <a href="#home">Início</a>
+                <a href="#about">Sobre</a>
+                <a href="#features">Recursos</a>
+                <a href="#team">Equipe</a>
+            </div>
+            <div class="footer-section">
+                <h3>Contato</h3>
+                <p><i class="fas fa-envelope"></i> contato@killvcraft.com</p>
+                <p><i class="fas fa-globe"></i> mtasa://killvcraft.com:22003</p>
+            </div>
+            <div class="footer-section">
+                <h3>Redes Sociais</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-discord"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 KillvCraft. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
     <script>
-        // Função para copiar texto para a área de transferência usando um método compatível com iframes.
-        function copyToClipboard(text) {
-            const tempInput = document.createElement('textarea');
-            tempInput.value = text;
-            document.body.appendChild(tempInput);
-            tempInput.select();
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
 
-            try {
-                // Tenta executar o comando de cópia
-                document.execCommand('copy');
-                
-                // Exibe a mensagem de sucesso
-                const messageBox = document.createElement('div');
-                messageBox.style.cssText = `
-                    position: fixed;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    background-color: rgba(0, 0, 0, 0.8);
-                    color: #fff;
-                    padding: 1.5rem 2rem;
-                    border-radius: 10px;
-                    z-index: 1000;
-                    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-                    font-size: 1.1rem;
-                `;
-                messageBox.innerText = 'Copiado para a área de transferência: ' + text;
-                
-                document.body.appendChild(messageBox);
-                
-                // Remove o modal após 2 segundos
-                setTimeout(() => {
-                    document.body.removeChild(messageBox);
-                }, 2000);
-
-            } catch (err) {
-                console.error('Falha ao tentar copiar o texto: ', err);
-                
-                // Exibe a mensagem de falha
-                const messageBox = document.createElement('div');
-                messageBox.style.cssText = `
-                    position: fixed;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    background-color: rgba(0, 0, 0, 0.8);
-                    color: #fff;
-                    padding: 1.5rem 2rem;
-                    border-radius: 10px;
-                    z-index: 1000;
-                    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-                    font-size: 1.1rem;
-                `;
-                messageBox.innerText = 'Falha ao copiar. Por favor, copie manualmente: ' + text;
-                
-                document.body.appendChild(messageBox);
-
-                // Remove o modal após 2 segundos
-                setTimeout(() => {
-                    document.body.removeChild(messageBox);
-                }, 2000);
-            } finally {
-                // Sempre remove o elemento temporário
-                document.body.removeChild(tempInput);
-            }
+        // Counter animation
+        function animateCounter(element, target) {
+            let current = 0;
+            const increment = target / 100;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target + (element.textContent.includes('+') ? '+' : '') + (element.textContent.includes('%') ? '%' : '');
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current) + (element.textContent.includes('+') ? '+' : '') + (element.textContent.includes('%') ? '%' : '');
+                }
+            }, 20);
         }
+
+        // Observe stats section
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    document.querySelectorAll('.stat-item h2').forEach(stat => {
+                        const text = stat.textContent;
+                        const number = parseInt(text.replace(/\D/g, ''));
+                        stat.textContent = '0';
+                        animateCounter(stat, number);
+                    });
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        });
+
+        const statsSection = document.querySelector('.stats');
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+
+        // Mobile menu toggle
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenu.addEventListener('click', () => {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
     </script>
 </body>
 </html>
-
